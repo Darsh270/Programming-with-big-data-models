@@ -1,0 +1,3 @@
+Code used to create directory for myhdfslab: 
+hdfs dfs -mkdir /user/dsw5439/myhdfslab
+

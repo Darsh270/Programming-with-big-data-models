@@ -1,0 +1,7 @@
+DEST_COUNTRY_NAME,ORIGIN_COUNTRY_NAME,count
+United States,Austria,5
+Mexico,Belgium,87
+Bangladesh,India,123
+Canada,United States,8
+Egypt,Russia,27
+France,Turkey,56

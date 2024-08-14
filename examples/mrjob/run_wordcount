@@ -1,0 +1,116 @@
+hdfs dfs -rm -r /user/$USER/mrjobexample
+
+python3 wordcount_mr.py -r hadoop --hadoop-streaming-jar /home2/hadoop-3.3.6/share/hadoop/tools/lib/hadoop-streaming-3.3.6.jar --jobconf mapreduce.job.reduces=4 hdfs:///datasets/wap --output-dir hdfs:///user/$USER/mrjobexample --no-output
+
+
+
+
+
+
+
+
+
+
+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
+
+MR
+
+Pylint  -E wordcount_mr.py
+
+#TO remove fileoutput
+Hdfs dfs -rm -r run_cities
+
+#TO run
+Source run_retail
+
+
+RDDS
+# To start scala shell
+Sbt
+Console
+
+#To run
+spark-submit --class Q1 /home/dsw5439/ds410hw/final/rdd/target/scala-2.12/cities_2.12-1.0.jar
+
+
+DF
+	
+# to open spark
+Spark-shell
+
+Run code:
+1.
+import org.apache.spark.sql.{DataFrame, Row, SparkSession}
+import org.apache.spark.sql.functions._
+import org.apache.spark.sql.types._
+
+
+2.
+val zipCounter = udf((x: String) => Option(x).map(_.split(" ").length).getOrElse(0))
+spark.udf.register("zipCounter", zipCounter)
+
+
+3.
+// Define Schema
+val schema = StructType(Seq(
+  StructField("City", StringType),
+  StructField("State Abbreviation", StringType),
+  StructField("State", StringType),
+  StructField("County", StringType),
+  StructField("Population", LongType),
+  StructField("Zip Codes (space separated)", StringType),
+  StructField("ID", StringType)
+))
+
+// Function to Load DataFrame
+def getDF(): DataFrame = {
+  val initialDF = spark.read
+    .option("delimiter", "\t")
+    .option("header", "true")
+    .schema(schema)
+    .csv("/datasets/cities/cities.csv")
+    .na.fill(0, Seq("Population"))
+    .na.fill("0", Seq("Zip Codes (space separated)"))
+    .withColumn("zip_count", expr("zipCounter(`Zip Codes (space separated)`)"))
+  initialDF
+}
+
+
+
+
+
+
+4.
+// Data Processing Function
+def doCity(input: DataFrame): DataFrame = {
+  input
+    .filter(!col("State Abbreviation").startsWith("State Abbreviation"))
+    .groupBy(col("State Abbreviation"))
+    .agg(
+      count("*").alias("num_cities"),
+      sum(col("Population")).alias("total_population"),
+      max(col("zip_count")).alias("max_zip_count")
+    )
+    .orderBy(col("State Abbreviation"))
+}
+
+
+
+5.
+val mydf = getDF()
+val counts = doCity(mydf)
+counts.show()
+
+
+
+
+
+
+
+6.
+def saveit(df: DataFrame, path: String): Unit = {
+  df.write.format("csv").mode("overwrite").option("header", "true").save(path)
+}
+// Save the processed data
+saveit(counts, "/path/to/save/dflabq1")
+

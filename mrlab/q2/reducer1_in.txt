@@ -1,0 +1,8 @@
+"ate", 1
+"each", 1
+"are", 1
+"ate", 1
+"aren't", 1
+"eat", 1
+"aren't", 1
+

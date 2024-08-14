@@ -1,0 +1,16 @@
+from mrjob.job import MRJob
+
+class WordCountWithE(MRJob):  # Updated class name for clarity
+
+    def mapper(self, _, line):
+        words = line.split()
+        for w in words:
+            if 'e' in w.lower():  # Check if 'e' is in the word
+                yield w.lower(), 1  # Emit word in lowercase
+
+    def reducer(self, word, values):
+        yield word, sum(values)
+
+if __name__ == '__main__':
+    WordCountWithE.run()
+

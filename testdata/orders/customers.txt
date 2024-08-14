@@ -1,0 +1,8 @@
+CustomerID	Country
+34578	Denmark
+34579   Austria
+34580   Belgium
+34581   Finland
+34582   Portugal
+34583   Spain
+

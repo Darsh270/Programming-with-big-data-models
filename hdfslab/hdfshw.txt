@@ -1,0 +1,19 @@
+Code used to create directory for myhdfslab: 
+hdfs dfs -mkdir /user/dsw5439/myhdfslab
+
+For number 5 I uploaded the files to the directory by this command:
+hdfs dfs -put part-00000 part-00001 part-00002 part-00003 /user/dsw5439/myhdfslab/
+
+For number 6 I moved the files from one directory to the other directory by this command:
+hdfs dfs -mv /user/dsw5439/myhdfslab/* /user/dsw5439/mywords/
+
+For number 7 I deleted the myhdfslab directory, the command I used is:
+hdfs dfs -rm -r /user/dsw5439/myhdfslab
+
+For number 8 I Displayed the last 1 kb of the part 00002 file with this command:
+hdfs dfs -tail -c 1KB /user/dsw5439/mywords/part-00002
+
+For number 9 I displayed the information about the filesize in bytes, replication information, user name of the file owner, and modification date for 00001, the command I used is:
+hdfs dfs -stat "%s %r %u %y" /user/dsw5439/mywords/part-00001
+
+

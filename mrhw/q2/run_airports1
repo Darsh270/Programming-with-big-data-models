@@ -1,0 +1,2 @@
+python3 airports.py /home/dsw5439/ds410hw/testdata/flight/data.txt > TestOutput.txt 
+
